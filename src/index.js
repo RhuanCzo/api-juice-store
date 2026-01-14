@@ -1,15 +1,17 @@
 import express from "express"
 import cors from "cors"
-import dotenv from "dotenv"
-import { MongoClient } from "mongodb"
+import authRoutes from "./routes/auth.routes.js"
 
 const app = express()
 
 app
 .use(cors())
 .use(express.json())
-const  mongoClient = new MongoClient(process.env.Mongo_URI)
+.use(authRoutes)
 
-app.listen(process.env.PORT, () => {
-    console.log("server running on port" + process.env.PORT)
-})
+
+
+
+
+
+app.listen(4000, () => console.log("server running in port 4000"))
