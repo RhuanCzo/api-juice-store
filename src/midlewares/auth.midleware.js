@@ -1,7 +1,22 @@
 import { usersCollection } from "../database/db.js"
 import bcrypt from "bcrypt"
 
-export default async function singInBodyValidation(req, res, next) {
+export async function signUpBodyValidation(req, res, next) {
+    const {email} = req.body
+
+    try {
+        const user = await usersCollection.findOne({ email })
+        if(user) {
+            return res.sendStatus(401)        }       
+        res.locals.user = user
+    } catch (err) {
+        console.log(err)
+        res.sendStatus(500)
+    }
+    next()
+}
+
+export async function signInBodyValidation(req, res, next) {
     const {email, password} = req.body
 
     try {
